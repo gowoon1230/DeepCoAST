@@ -1,7 +1,7 @@
 
 from __future__ import print_function
 from keras.callbacks import LambdaCallback
-from new_model import create_model, create_model_2d
+from new_model import create_model
 import tensorflow as tf
 import os
 from keras.models import Model
@@ -23,11 +23,11 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 parser = argparse.ArgumentParser()
 
 def get_params():
-    parser.add_argument("-r", '--range_', type=str, default = "50,70") # parameter for TrafficSliver range(n), (ex: 10,40 , 50,70)
-    parser.add_argument("-p", '--prob', type=str, default = "0.5, 0.5") # parameter for TrafficSliver weight(w), (ex: 0.3, 0.7 , 0.4, 0.6 , 0.5, 0.5)
+    parser.add_argument("-r", '--range_', type=str, default = "50_70") # parameter for TrafficSliver range(n), (ex: 10_40 , 50_70)
+    parser.add_argument("-p", '--prob', type=str, default = "0.5_0.5") # parameter for TrafficSliver weight(w), (ex: 0.3_0.7 , 0.4_0.6 , 0.5_0.5)
     parser.add_argument("-a", '--alpha', type=float, default = 0.1)
     parser.add_argument("-b", '--batch_size', type=int, default = 128)
-    parser.add_argument("-f", '--feature', type=str, default = "Direction") # Direction, TikTok, 1-D TAM, ICD, ICDS
+    parser.add_argument("-f", '--feature', type=str, default = "Direction") # Direction, TikTok, 1-DTAM, ICD, ICDS
     parser.add_argument("-e", '--epoch', type=int, default = 300) # if you use max size epoch, enter -1 
     parser.add_argument("-i", '--input_size', type=int, default = 5000) 
     parser.add_argument("-d", '--defense_type', type=str, default = "TrafficSliver") # TrafficSliver, CoMPS, HyWF
@@ -54,11 +54,11 @@ def identity_loss(y_true, y_pred):
 def intersect(a, b):
         return list(set(a) & set(b))
 
-def build_similarities(conv1, tor_t, exit_t):
+def build_similarities(conv1, path0_t, path1_t):
 
-        tor_embs = conv1.predict(tor_t)
-        exit_embs = conv1.predict(exit_t)
-        all_embs = np.concatenate((tor_embs, exit_embs), axis=0)
+        path0_embs = conv1.predict(path0_t)
+        path1_embs = conv1.predict(path1_t)
+        all_embs = np.concatenate((path0_embs, path1_embs), axis=0)
         all_embs = all_embs / np.linalg.norm(all_embs, axis=-1, keepdims=True)
         mid = int(len(all_embs) / 2)
         all_sims = np.dot(all_embs[:mid], all_embs[mid:].T)
