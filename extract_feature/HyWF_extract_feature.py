@@ -1,14 +1,11 @@
 import math
 import sys
-import os
 import time
 import random
-import numpy as np
 import numpy as np
 import os
 from os import listdir
 from tqdm import tqdm
-import math
 import pickle
 import argparse
 # This file extracts the features for the different attacks (parallel version)
