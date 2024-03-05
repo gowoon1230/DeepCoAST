@@ -128,8 +128,8 @@ def eval_model(full_or_half, use_new_data, model_path, test_path0, test_path1, t
     test_path0 = np.array(test_path0)
     test_path1 = np.array(test_path1)
 
-    print('test_path0 sample 개수: ', np.array(test_path0).shape)
-    print('test_path1 sample 개수: ', np.array(test_path1).shape)
+    print('test_path0 sample: ', np.array(test_path0).shape)
+    print('test_path1 sample: ', np.array(test_path1).shape)
     print('flow:', full_or_half)
 
     pad_path0 = INPUT_SIZE
