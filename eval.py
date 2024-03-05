@@ -132,10 +132,9 @@ def eval_model(full_or_half, use_new_data, model_path, test_path0, test_path1, t
     print('test_path1 sample 개수: ', np.array(test_path1).shape)
     print('flow:', full_or_half)
 
-    pad_t = INPUT_SIZE
-    pad_e = INPUT_SIZE
+    pad_path0 = INPUT_SIZE
 
-    model = create_model (input_shape=(pad_t, 1), emb_size=64, model_name='all-in-one')
+    model = create_model (input_shape=(pad_path0, 1), emb_size=64, model_name='all-in-one')
     
     # load triplet models for tor and exit traffic
     model.load_weights (model_path)
@@ -146,7 +145,6 @@ def eval_model(full_or_half, use_new_data, model_path, test_path0, test_path1, t
     threshold_result = []
 
     # below are the code that are used for controlling the behavior of the program
-    # correlated_shreshold_value = five_or_four
     thres_seed = thr
     
     start_emd = time.time ()
@@ -190,6 +188,7 @@ if __name__ == "__main__":
     output_path = '/'.join(model_path.split('/')[:-1]) + '/'
     print(output_path)
     
+    # change the threshold list appropriately
     # rank_thr_list = [60, 50,47,43,40,37,33,28,24,20,16.667,14,12.5,11,10,9,8.333,7,6.25,5,4.545,3.846,2.941,1.667,1.6,1.5,1.4,1.3,1.2,1.1,1.0,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2]#[10]
     rank_thr_list = [100, 90, 80, 70, 60, 50,47,43,40,37,33,28,24,20,16.667,14,12.5,11,10,9,8.333,7,6.25,5,4.545,3.846,2.941,1.667,1.6,1.5,1.4,1.3,1.2,1.1,1.0,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2, 0]#[10]
     num_of_thr = len(rank_thr_list)
@@ -198,7 +197,6 @@ if __name__ == "__main__":
     global flow
     flow = flow_length
     print(f"{flow_length=}")
-    # five_or_four = 9
 
     rank_multi_output = []
     five_rank_multi_output = []
