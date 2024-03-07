@@ -1,10 +1,10 @@
 import math
 import sys
+import os
+from os import listdir
 import time
 import random
 import numpy as np
-import os
-from os import listdir
 from tqdm import tqdm
 import pickle
 import argparse
@@ -79,7 +79,7 @@ def get_exp(avg_t, dist):
         return avg_t
 
 def write_features(directory, fname, p_in, p_out, p_dist, is_train, original_probas, FEATURE):
-    # by seoh
+    # set param by DeepCoFFEA (Oh et al.)
     num_consecutive_packets_in = 20
     num_consecutive_packets_out = 20
     change_times = 0
@@ -200,7 +200,7 @@ def get_local_p(p, p_dist):
 def fextractor(p_train, FEATURE):
     t_beg = time.time()
 
-    original_directory = "/scratch2/TrafficSliver/DeepCoAST/FINAL/hywf/dataset/" #### 추후 수정 요망
+    original_directory = "/DeepCoAST/HyWF_raw/" # this folder contains the data before splitting
     directory_train = os.path.join(original_directory, "train/")
     directory_test = os.path.join(original_directory, "test/")
     test_files = listdir(directory_test)
@@ -218,7 +218,7 @@ def fextractor(p_train, FEATURE):
     total_num_pkts_network1_test = 0
     total_num_pkts_test = 0
 
-    # set param (by seoh)
+    # set param by DeepCoFFEA (Oh et al.)
     p_test_in = 0.5
     p_test_out = 0.5
     p_dist = "uniform"
@@ -254,7 +254,7 @@ def fextractor(p_train, FEATURE):
     total_num_pkts_train = 0
 
     count_exp = 0
-    # param by seoh
+    # param by DeepCoFFEA (Oh et al.)
     p_train_in = p_train
     p_train_out = p_train
     p_dist = "uniform"
@@ -307,7 +307,7 @@ if __name__ == "__main__":
     print ('Shape of X_test1', np.array(X_test1).shape)
     print ('Shape of y_test1', np.array(y_test1).shape)
 
-    if FEATURE == "1-DTAM": output_path = "/DeepCoAST/HyWF/1-DTAM/" ## 코드 맞게 고쳤는지 확인용!! 나중에 /home~/Dataset까지 빼기
+    if FEATURE == "1-DTAM": output_path = "/DeepCoAST/HyWF/1-DTAM/" 
     else: output_path = "/DeepCoAST/HyWF/" + FEATURE + "/"
     if not os.path.isdir(output_path): os.mkdir(output_path)
 
@@ -324,19 +324,20 @@ if __name__ == "__main__":
     with open(output_path+"test_label.pkl", 'wb') as f:
         pickle.dump(np.array(y_test0), f, pickle.HIGHEST_PROTOCOL)
 
-    data = np.load(output_path+"train_path1.pkl", allow_pickle=True)
-    print(data[0][:50])
-    print(data[22][:50])
-    data = np.load(output_path+"train_label.pkl", allow_pickle=True)
-    print(data[0])
-    print(data[22])
-    print()
-    data = np.load(output_path+"test_path0.pkl", allow_pickle=True)
-    print(data[0][:50])
-    print(data[22][:50])
-    data = np.load(output_path+"test_label.pkl", allow_pickle=True)
-    print(data[0])
-    print(data[22])
+    ## check data     
+    # data = np.load(output_path+"train_path1.pkl", allow_pickle=True)
+    # print(data[0][:50])
+    # print(data[22][:50])
+    # data = np.load(output_path+"train_label.pkl", allow_pickle=True)
+    # print(data[0])
+    # print(data[22])
+    # print()
+    # data = np.load(output_path+"test_path0.pkl", allow_pickle=True)
+    # print(data[0][:50])
+    # print(data[22][:50])
+    # data = np.load(output_path+"test_label.pkl", allow_pickle=True)
+    # print(data[0])
+    # print(data[22])
 
     print("All Done")
 
