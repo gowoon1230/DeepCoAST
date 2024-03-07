@@ -71,8 +71,8 @@ def extract(input_path0, input_path1, feature):
             train_label.append(site)
 
     print("Number of Samples After Deleting Blank Files:", (len(train_label)+len(test_label))*2)
-    print("Number of Samples in Train Set:", len(train_path0)+len(train_path1))
-    print("Number of Samples in Test Set:", len(test_path0)+len(test_path1))
+    print("Number of Train Set:", len(train_path0)+len(train_path1))
+    print("Number of Test Set:", len(test_path0)+len(test_path1))
     return train_path0, train_path1, test_path0, test_path1, train_label, test_label
 
 if __name__ == "__main__":
