@@ -91,7 +91,7 @@ if __name__ == "__main__":
     print(train_path0[5][30:])
     print(train_path0[5][100:])
     print(train_path1[10][30:])
-    output_path = "/DeepCoAST/TrafficSliver/n(" + r +")/w(" + p + ")/" +feature+"/"
+    output_path = "/DeepCoAST/TrafficSliver/n(" + r +")/w(" + p + ")/" +feature
     if not os.path.isdir(output_path): os.mkdir(output_path)
 
     with open(output_path + '/train_path0.pkl', 'wb') as f:
